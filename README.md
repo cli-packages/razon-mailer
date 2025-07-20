@@ -220,10 +220,10 @@ razon send
 razon send -f
 
 # Send emails to first N recipients
-razon send <count>
+razon send [count]
 
 # Send emails to first N recipients (force)
-razon send <count> -f
+razon send [count] -f
 
 # Send test emails (default: 5 recipients, or specify count)
 razon test [count]
