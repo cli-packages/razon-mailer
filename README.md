@@ -210,30 +210,122 @@ Razon includes Chromium for web-based email automation. The browser is automatic
 
 ## Command Reference
 
+### Email Sending Commands
+
 ```bash
-# Initialize configuration
+# Send emails to all recipients
+razon send
+
+# Send emails ignoring duplicate check (force send to already contacted recipients)
+razon send -f
+
+# Send emails to first N recipients
+razon send <count>
+
+# Send emails to first N recipients (force)
+razon send <count> -f
+
+# Send test emails (default: 5 recipients, or specify count)
+razon test [count]
+```
+
+### Email Management Commands
+
+```bash
+# Remove duplicate emails from file using regex extraction
+razon remove-dup [filepath]
+razon remove-dup [filepath] -o output.txt
+
+# Remove invalid emails from file
+razon remove-bad [filepath]
+razon remove-bad [filepath] --type syntax
+razon remove-bad [filepath] --type provider --domains gmail.com,yahoo.com
+razon remove-bad [filepath] -o clean-emails.txt
+
+# Remove emails that already exist in database
+razon remove-non-unique [filepath]
+razon remove-non-unique [filepath] -o new-emails.txt
+
+# Remove emails that don't exist in database (keep only existing)
+razon remove-unique [filepath]
+razon remove-unique [filepath] -o existing-only.txt
+```
+
+### Statistics & Information Commands
+
+```bash
+# Show total emails sent from each SMTP/OWA provider
+razon count-total
+
+# Show comprehensive system summary
+razon summary
+
+# Show specific summary sections
+razon summary --smtp
+razon summary --owa
+razon summary --config
+razon summary --database
+```
+
+### Database Management Commands
+
+```bash
+# Create a database backup with .razon extension
+razon backup [name]
+razon backup [name] -p /custom/path
+
+# Restore database from a .razon backup file
+razon restore <name>
+razon restore <name> -p /custom/path
+razon restore <name> --clear --verify
+
+# List available .razon backup files
+razon list-backups
+razon list-backups -p /custom/path
+
+# Clear entire database (DANGEROUS OPERATION)
+razon clear --confirm
+```
+
+### System Management Commands
+
+```bash
+# Initialize configuration files
 razon init
 
 # Force overwrite existing configuration
 razon init -f
 
-# Send emails to all recipients
-razon send
+# Install Chromium browser for email automation
+razon install
+razon install --latest
 
-# Send emails ignoring duplicate check
-razon send -f
+# Check for available updates
+razon check-for-update
+razon check-for-update -u
 
-# Send test emails to first N recipients
-razon test <N>
+# Update Razon to the latest version
+razon update
+razon update -f
 
-# Show unique recipients
-razon -u
-
-# Clear the database
-razon --clear
+# Display version information
+razon version
+razon v
 
 # Show help
 razon --help
+```
+
+### Global Options
+
+```bash
+# Initialize configuration (can be used with any command)
+razon -i
+razon --init
+
+# Force operations (context-dependent)
+razon -f
+razon --force
 ```
 
 ## Platform Support
